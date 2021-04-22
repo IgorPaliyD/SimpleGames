@@ -12,7 +12,7 @@ public class PlayerAnimations : MonoBehaviour
     public void PlayWalkAimation(Vector3 moveDirection){
         _animator.SetFloat("Horizontal",moveDirection.x);
         _animator.SetFloat("Vertical",moveDirection.y);
-        _animator.SetFloat("Speed",moveDirection.magnitude);
+        _animator.SetFloat("Speed",moveDirection.sqrMagnitude);
     }
 }
 
