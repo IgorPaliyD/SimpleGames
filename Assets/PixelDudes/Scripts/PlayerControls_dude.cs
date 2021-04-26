@@ -11,11 +11,11 @@ public class PlayerControls_dude : MonoBehaviour
     // private void Start(){
     //     _rigidbody= GetComponent<Rigidbody2D>();
     // }
-    private Player_dude _Dude;
+    private Player_HorizontalMove _Dude;
 
     private void SetPlayer(){
         if(_Dude) return;
-        if(TryGetComponent(out Player_dude player)){
+        if(TryGetComponent(out Player_HorizontalMove player)){
             _Dude=player;
             return;
         }
@@ -31,8 +31,5 @@ public class PlayerControls_dude : MonoBehaviour
             vertical +=1;
         }
         horizontal = Input.GetAxisRaw("Horizontal");
-        
-        _Dude.MovePlayerHorizontal(horizontal);
-        _Dude.Jump(vertical);
     }
 }
