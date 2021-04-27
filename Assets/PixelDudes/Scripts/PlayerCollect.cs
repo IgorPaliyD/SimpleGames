@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine.Events;
 public class PlayerCollect : MonoBehaviour
 {
-    private float _collectablesCount=0f;
     public TMP_Text _countText;
     private UnityEvent _event;
 
@@ -15,17 +14,14 @@ public class PlayerCollect : MonoBehaviour
 
    private void OnTriggerEnter2D(Collider2D other) {
        if(!other.gameObject.CompareTag("Collectable")) return;
-        _collectablesCount++;
+        GameMaster.IncreaseCollectableCount();
         SetCount();
         Destroy(other.gameObject);
    }
 
     private void SetCount(){
-        
-        _countText.text= string.Format("Collected: {0}", _collectablesCount);
+        _countText.text= string.Format("Collected: {0}", GameMaster.GetCollectableCount());
     }
 
-   public float GetCollectablesCount(){
-       return _collectablesCount;
-   }
+   
 }

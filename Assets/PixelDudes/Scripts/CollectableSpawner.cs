@@ -29,11 +29,11 @@ public class CollectableSpawner : MonoBehaviour
         //StartCoroutine(SpawnCoroutine(rand.Next()));
     }
     private void Update() {
-        if(_master.IsTime()){
+        if(GameMaster.IsTime()){
             if(Time.time > _nextSpawn){
             _nextSpawn = Time.time + _spawnRate;
             Spawn();
-            _master.DecreaseTime();
+            GameMaster.DecreaseTime();
         }
         }
         
