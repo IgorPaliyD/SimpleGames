@@ -236,7 +236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -612.57, y: 277.52}
+  m_AnchoredPosition: {x: -357.07, y: 345.27}
   m_SizeDelta: {x: 309.86032, y: 77.46508}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180804668
@@ -958,7 +958,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 9.13
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1161,6 +1161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 466742209}
   - component: {fileID: 466742210}
+  - component: {fileID: 466742211}
   m_Layer: 0
   m_Name: Bounds
   m_TagString: Untagged
@@ -1196,9 +1197,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2e2ba691bafd14f842da012981b896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: 15
-  _loseImage: {fileID: 1348476289}
-  _winImage: {fileID: 791468666}
+  _roundTime: 10
+  _mustBeCollected: 5
+--- !u!114 &466742211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466742208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6afee757fb7a64db7bc63bd226ff3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collectableCountText: {fileID: 180804668}
+  _timerFillImage: {fileID: 0}
+  _loseWindow: {fileID: 1348476289}
+  _winWindow: {fileID: 791468666}
 --- !u!1 &791468666
 GameObject:
   m_ObjectHideFlags: 0
@@ -3431,8 +3447,8 @@ Canvas:
   m_GameObject: {fileID: 2140535469}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 346026768}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

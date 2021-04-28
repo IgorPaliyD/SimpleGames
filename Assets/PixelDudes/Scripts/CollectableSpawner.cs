@@ -19,7 +19,9 @@ public class CollectableSpawner : MonoBehaviour
    public Transform LeftDownAnchor;
    public Transform RightUpAnchor;
 
-   
+   private void Awake() {
+       GameMaster.InitializeSpawner(this);
+   }
     private void Spawn(){
         Random rand = new Random();
         var i = rand.Next(0,_prefab.Length);
@@ -30,14 +32,13 @@ public class CollectableSpawner : MonoBehaviour
     }
     private void Update() {
         if(GameMaster.IsTime()){
+            Debug.Log("spawn");
             if(Time.time > _nextSpawn){
             _nextSpawn = Time.time + _spawnRate;
             Spawn();
             GameMaster.DecreaseTime();
         }
         }
-        
-        
         
     }
     IEnumerator SpawnCoroutine(int seed){

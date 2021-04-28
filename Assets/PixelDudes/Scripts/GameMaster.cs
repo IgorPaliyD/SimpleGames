@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.Events;
+using System;
 public class GameMaster : MonoBehaviour
 {
     static GameMaster current;
+    //Private fields
     private float _collectableCount;
     private bool isWin=false;
 
@@ -11,9 +14,20 @@ public class GameMaster : MonoBehaviour
     private float _maxGameTime;
     private float _totalGameTime;
     private float _currentSessiontime;
+    private bool _isGameStarted=false;
+
+    //CustomComponents
+    private InfoUI _ui;
+    private CollectableSpawner _spawner;
+
+    //Serialize Fields
     [SerializeField]private float _roundTime;
     
     [SerializeField]private float _mustBeCollected=5;
+
+    //Events
+    [HideInInspector]public static UnityEvent onTimerStart;
+    [HideInInspector]public static UnityEvent onTimeOut;
 
     private void Awake() {
         if (current != null && current != this)
@@ -23,8 +37,20 @@ public class GameMaster : MonoBehaviour
 			return;
 		}
 
-		//Set this as the current game manager
 		current = this;
+        StartGame();
+    }
+
+    //Field setters 
+    public static void InializeUi(InfoUI ui){
+        if (current == null)
+			return;
+
+		
+        current._ui= ui;
+    }
+    public static void InitializeSpawner(CollectableSpawner spawner){
+        current._spawner = spawner;
     }
     private void FixedUpdate() {
         
@@ -33,19 +59,34 @@ public class GameMaster : MonoBehaviour
         if(Input.GetKey(KeyCode.R)){
             SceneManager.LoadScene(0);
         }
-    }
-    public static void SaveMaxTime(){
-        if(current._maxGameTime>current._currentSessiontime) return;
-       current._maxGameTime=current._currentSessiontime;
-    }
-    public void CountTotalGameTime(){
+        CountTime();
         
     }
-    public static void IncreaseCurrentSessiontime(){
-       current._currentSessiontime++;
+    private static void CountTime(){
+        if(!current._isGameStarted) return;
+        if(!IsTime()){
+//            onTimeOut.Invoke();
+        }
+        if(current._roundTime>0){
+            current._roundTime -=Time.deltaTime;
+        }
     }
+    // public static void SaveMaxTime(){
+    //     if(current._maxGameTime>current._currentSessiontime) return;
+    //    current._maxGameTime=current._currentSessiontime;
+    // }
+    // public void CountTotalGameTime(){
+        
+    // }
+    public static void StartGame(){
+        current._isGameStarted = true;
+    }
+    // public static void IncreaseCurrentSessiontime(){
+    //    current._currentSessiontime++;
+    // }
     public static void IncreaseCollectableCount(){
         current._collectableCount++;
+        current._ui.SetCollectableCount(current._collectableCount);
     }
     public static float GetCollectableCount(){
         return current._collectableCount;
@@ -55,9 +96,13 @@ public class GameMaster : MonoBehaviour
         current._roundTime--;
     }
     public static bool IsTime(){
-        return current._roundTime==0?true:false;
+        return current._roundTime>0?true:false;
     }
     public static bool IsPlayerWins(){
         return current._collectableCount==current._mustBeCollected?true:false;
+    }
+
+    public static void SetListenerOnTimeOut(Action action){
+        
     }
 }
